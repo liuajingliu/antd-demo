@@ -72,7 +72,7 @@ const CustomNodeWithHover = ({ id, data, selected }) => {
     border: isHovered 
       ? `2px solid ${data.borderColor || '#1890ff'}` 
       : `1px solid ${data.borderColor || '#1890ff'}`,
-    backgroundColor: data.backgroundColor || '#fff',
+    backgroundColor: 'transparent',
     boxShadow: isHovered 
       ? '0 0 15px rgba(24, 144, 255, 0.6), 0 4px 8px rgba(0,0,0,0.15)'
       : selected 
@@ -112,11 +112,17 @@ const CustomNodeWithHover = ({ id, data, selected }) => {
 
 // 区域卡片内的节点组件（更小的尺寸）
 const AreaNode = ({ data, selected }) => {
+  // 生成随机颜色
+  const getRandomColor = () => {
+    const colors = ['#ff7875', '#ff9c6e', '#ffc069', '#fff566', '#95de64', '#5cdbd3', '#69c0ff', '#b37feb', '#ff85c0'];
+    return colors[Math.floor(Math.random() * colors.length)];
+  };
+
   const nodeStyle = {
     padding: '6px 12px',
     borderRadius: '4px',
-    border: `1px solid ${data.borderColor || '#1890ff'}`,
-    backgroundColor: data.backgroundColor || '#fff',
+    border: '1px solid #d9d9d9',
+    backgroundColor: 'transparent',
     boxShadow: selected ? '0 0 8px rgba(24, 144, 255, 0.4)' : '0 1px 4px rgba(0,0,0,0.1)',
     minWidth: '80px',
     width: '80px',
@@ -124,6 +130,19 @@ const AreaNode = ({ data, selected }) => {
     fontSize: '10px',
     fontWeight: 'bold',
     color: data.textColor || '#333',
+    position: 'relative',
+  };
+
+  const badgeStyle = {
+    position: 'absolute',
+    top: '0',
+    right: '0',
+    width: '0',
+    height: '0',
+    borderTop: '5.6px solid transparent',  // 8 * 0.7 = 5.6
+    borderRight: `9.8px solid ${getRandomColor()}`,  // 14 * 0.7 = 9.8
+    borderBottom: '5.6px solid transparent',  // 8 * 0.7 = 5.6
+    zIndex: 10,
   };
 
   return (
@@ -139,6 +158,7 @@ const AreaNode = ({ data, selected }) => {
         position={Position.Bottom}
         style={{ background: '#1890ff', width: 4, height: 4 }}
       />
+      <div style={badgeStyle}></div>
     </div>
   );
 };
@@ -406,7 +426,7 @@ const AreaCard = ({ title, areaName, containerWidth }) => {
     border: '1px solid #d9d9d9', 
     borderRadius: '8px', 
     overflow: 'hidden',
-    backgroundColor: '#fff',
+    backgroundColor: 'transparent',
     height: '300px',
     position: 'relative',
     zIndex: 2,
@@ -452,7 +472,7 @@ const AreaCard = ({ title, areaName, containerWidth }) => {
             nodesDraggable={false}
             nodesConnectable={false}
             elementsSelectable={true}
-            style={{ background: '#fafafa' }}
+            style={{ background: 'transparent' }}
             attributionPosition="bottom-left"
             hideAttribution={true}
           >
@@ -480,7 +500,7 @@ const AreaCard = ({ title, areaName, containerWidth }) => {
             nodesDraggable={false}
             nodesConnectable={false}
             elementsSelectable={true}
-            style={{ background: '#fafafa' }}
+            style={{ background: 'transparent' }}
             attributionPosition="bottom-left"
           >
             {/* <Background /> */}
